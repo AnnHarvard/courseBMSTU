@@ -1,0 +1,69 @@
+/* CSS стили для таблицы и полей ввода */
+table {
+    border-collapse: collapse; /* объединение границ ячеек */
+    width: 100%;
+}
+th, td {
+    padding-right: 5px; /* внутренний отступ */
+    text-align: center;
+}
+input[type="text"] {
+    width: 50px; /* Ширина поля ввода */
+    height: 20px; /* Высота поля ввода */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.cell-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .cell-container:hover {
+    opacity: 1;
+  } 
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+ 
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}
+
+/* Стилизация полосы прокрутки для WebKit (Chrome, Safari) */
+/* ::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius:1px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  
+  /* Стилизация полосы прокрутки для Firefox */
+  /* Применяется к области прокрутки, а не к полосе прокрутки напрямую */
+  /* * {
+    scrollbar-width: thin;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  } */ 

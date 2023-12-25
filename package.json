@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "compile-css": "npx tailwindcss -i ./static/src/input.css -o ./static/dist/css/output.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.6"
+  },
+  "dependencies": {
+    "flowbite": "^2.1.1",
+    "vis-network": "^9.1.9"
+  }
+}

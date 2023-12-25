@@ -1,0 +1,486 @@
+<!--/traversal-->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-screen-2xl"> <!-- mx-auto -->
+    <div class="flex flex-col">
+        <div class="flex flex-col items-center">
+            <h1 class="mb-9 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white">Обходы бинарного дерева</h1>
+        </div>
+    </div>
+    <div class="flex flex-col justify-start items-start">
+
+    
+        <div class="w-2/3 h-25 hidden" id="updateAddNodeContainer">
+            <!-- <div id="updateNodeContainer" style="display: none; position: absolute; top: 0; left: 0; padding: 10px; background-color: #fff; border: 1px solid #ccc; "> -->
+                <div class="flex flex-row">
+                    <form class="w-24">
+                        <input type="number" id="updateNode" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Сменить" required>
+                    </form>
+                    <!-- <label for="number-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Сменить значение</label> -->
+
+                    <div class="mx-2">
+                        <button id="updateButton" type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Сменить</button>
+                    </div>
+
+                    <div class="mx-2">
+                        <button id="deleteButton" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Удалить</button>
+                    </div>
+                    <div class="ml-auto">
+                        <div>
+                            <div class="flex flex-col">
+                                <div class="flex items-center mb-4">
+                                    <input id="radioLeft" type="radio" value="left" name="side" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="radioLeft" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Добавить слева</label>
+                                </div>
+
+                                <div class="flex items-center">
+                                    <input checked id="radioRight" type="radio" value="right" name="side" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="radioRight" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Добавить справа</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <form class="w-28" id="updateAddContainer">
+                        <input type="number" id="addNode" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Добавить" required>
+                    </form>
+
+                    <div>
+                        <button id="addButton" type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Добавить</button>
+                    </div>
+                </div>
+                    
+                    
+
+
+            </div>
+                
+                
+            <!-- </div> -->
+        </div>
+        <div class="flex flex-row">
+            <div class="w-2/3">
+                <div id="treeVisualization" class="border border 1"></div>
+            </div>
+            <div class="justify-end w-1/3">
+                <div class="flex flex-col mx-auto justify-center items-center pt-4">
+
+                    <div>
+                        <button id="bfsButton" type="button" class="mb-8 w-56 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Обход в ширину</button>
+                    </div>
+                    <div >
+                        <button id="dfsButton_pre_order" type="button" class="mb-8 w-56 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Pre-order</button>
+                    </div>
+                    <div>
+                        <button id="dfsButton_in_order" type="button" class="mb-8 w-56 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Post-order</button>
+                    </div>
+                    <div>
+                        <button id="dfsButton_post_order" type="button" class="mb-8 w-56 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">In-order</button>
+                    </div>
+                    <div>
+                        <input id="speedSlider" type="range" min="300" max="5100" value="300" step="300" class="w-56 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                        <label for="speedSlider" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Скорость обхода</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+    
+</div>
+
+
+<!-- <button id="bfsButton">Обход в ширину</button>
+    <button id="dfsButton_pre_order">Прямой обход в глубину</button>
+    <button id="dfsButton_in_order">Симметричный обход в глубину</button>
+    <button id="dfsButton_post_order">Обратный обход в глубину</button>
+
+
+    <div class="slidecontainer">
+        <p>Скорость обхода</p>
+        <input type="range" min="300" step="100" max="5000" value="300" id="speedSlider">
+  
+      </div> -->
+    <!-- <script>var speedSlider = document.getElementById('speedSlider');
+    </script> -->
+    
+    <!-- Поле ввода и кнопка -->
+     <!-- <div id="updateAddNodeContainer" style="display: none; position: absolute; top: 0; left: 0; padding: 10px; background-color: #fff; border: 1px solid #ccc; ">
+        <input type="text" id="newValue" placeholder="Введите новое значение">
+        <button id="updateButton">Сменить</button>
+        
+    </div>
+
+    <div id="addNodeContainer" style="display: none; position: absolute; top: 0; left: 400px; padding: 10px; background-color: #fff; border: 1px solid #ccc; ">
+        <label>
+            <input type="radio" name="side" value="left" checked>Добавить слева
+        </label>
+        <label>
+            <input type="radio" name="side" value="right">Добавить справа
+        </label>
+        <input type="text" id="newNodeValue" placeholder="Введите значение">
+        <button id="addNodeButton">Добавить вершину</button>
+    </div>  -->
+    
+
+    <script>
+        console.log("checking")
+        var serializedTree = {{ serialized_tree|tojson|safe }};
+        
+        var container = document.getElementById('treeVisualization');
+        var data = {
+            nodes: new vis.DataSet([]),
+            edges: new vis.DataSet([])
+        };
+
+        buildTree(serializedTree, data.nodes, data.edges, 1);
+
+        var options = {
+            width: '100%',
+            height: '450px',
+            //physics: false,
+            nodes: {
+                //size:4000,
+                font: {
+                  size: 50
+                },
+                color: {
+                    background: 'rgba(140, 255, 220, 1)',  // Прозрачный цвет фона
+                    highlight:  'rgba(140, 255, 220, 1)',
+                    //hover: 'rgba(0,0,0,0)'
+                    },
+                    font: {
+                        color: 'rgba(0, 0, 0, 1)'  // Прозрачный цвет текста
+                    },
+                    borderWidth: 1 , // Устанавливаем толщину обводки в 0, чтобы сделать ее прозрачной
+                    
+              
+                },
+              edges: {
+                color: 'rgba(0, 0, 0, 0.5)',  // Прозрачный цвет ребра
+                //highlight: 'rgba(0, 0, 0, 1)',
+                font: {
+                  align: "top"
+                },
+                arrows: {
+                  to: { enabled: true, scaleFactor: 1, type: "arrow" }
+                }
+              },
+              layout: {
+                hierarchical: {
+                  direction: "UD",
+                  sortMethod: 'directed',
+                  nodeSpacing: 100,
+                  shakeTowards: 'roots',
+                  levelSeparation:70,
+
+                }
+              },
+              interaction: {
+                tooltipDelay: 200,
+                hover: true,
+                navigationButtons: true,
+                keyboard: true
+              },
+              
+        };
+
+        
+        
+        
+        var network = new vis.Network(container, data, options);
+        var bfsButton = document.getElementById('bfsButton');
+        var dfsButtonPreOrder = document.getElementById('dfsButton_pre_order');
+        var dfsButtonInOrder = document.getElementById('dfsButton_in_order');
+        var dfsButtonPostOrder = document.getElementById('dfsButton_post_order');
+        console.log("checking 2")
+        console.log(data.nodes.get(1))
+
+
+        bfsButton.onclick = function () { // Вызов функции обхода в ширину
+            traverseTree('bfs', 'rgba(128, 0, 128, 0.8)');
+        };
+        dfsButtonPreOrder.onclick=function(){ 
+            traverseTree('dfs_pre_order', 'rgba(255, 85, 255, 0.8)');
+        }
+        dfsButtonInOrder.onclick=function(){ 
+            traverseTree('dfs_in_order', 'rgba(0, 0, 255, 0.6)');
+        }
+        dfsButtonPostOrder.onclick=function(){ 
+            traverseTree('dfs_post_order','rgba(212, 105, 68, 0.8)');
+        }
+        console.log("check 3")
+        network.on("selectNode", function (params) {
+            var current_id = params.nodes[0];
+            console.log("from console")
+
+            var node = data.nodes.get(current_id);
+            console.log(node)
+
+
+            var current_label = node ? node.label : null;
+
+            console.log("ID узла:", current_id);
+            console.log("Метка узла:", current_label);
+
+            console.log("from console")
+            if (current_id !== undefined) {
+                var updateAddNodeContainer = document.getElementById("updateAddNodeContainer");
+                
+                var updateNode = document.getElementById("updateNode");
+                var addNode = document.getElementById("addNode");
+
+                var updateButton = document.getElementById("updateButton");
+                var deleteButton = document.getElementById("deleteButton");
+                var addButton = document.getElementById("addButton");
+
+                var radioLeft = document.getElementById("radioLeft");
+                var radioRight = document.getElementById("radioRight");
+
+                radioLeft.disabled=false;
+                radioRight.disabled=false;
+
+                if (data.nodes.get(current_id*2)){
+                    console.log(current_id*2)
+                   radioLeft.disabled=(data.nodes.get(current_id*2).label=="")?false:true;
+                radioRight.disabled=(data.nodes.get(current_id*2+1).label=="")?false:true; 
+                }
+                
+
+                // Установить текущее значение узла в поле ввода
+                updateNode.value = current_label;
+
+                // Показать поле ввода и кнопку
+                updateAddNodeContainer.classList.toggle('hidden')
+
+
+
+
+                // Обработчик события для кнопки "Сменить"
+                updateButton.onclick = function () {
+
+                    // Получить новое значение из поля ввода
+                    var new_label = updateNode.value;
+                    console.log("new-label========",new_label)
+                    console.log("is !NaN new-label========",!isNaN(new_label))
+                    console.log("is Number.isInteger(new_label)",Number.isInteger(new_label))
+
+                    if (!isNaN(new_label)) {
+                        console.log("new-label========",new_label)
+                        // Обновить метку кликнутого узла
+                        network.body.data.nodes.update({ id: current_id, label: String(new_label) });
+
+                            //Отправка нового значения на сервер
+                            fetch("traversal/update_node", {
+                            "method": "POST",
+                            "headers": {"Content-Type": "application/json"},
+                            "body": JSON.stringify({ current_value: current_label, new_value: new_label })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                            console.log("Значение успешно обновлено на сервере");
+                            })
+                            .catch(error => {
+                            console.error("Произошла ошибка при отправке данных на сервер", error);
+                            });
+                    }
+
+                    // Скрыть поле ввода и кнопку
+                    updateAddNodeContainer.classList.toggle('hidden');
+                    network.unselectAll();
+
+                  
+                };
+                // Обработчик события для кнопки "Добавить вершину"
+                addButton.onclick = function () {
+                    var sideInput = document.querySelector('input[name="side"]:checked');
+                    var newNodeValueInput = document.getElementById("newNodeValue");
+
+                    var side = sideInput ? sideInput.value : null;
+                    var newNodeValue = parseInt(addNode.value);
+                    if (!isNaN(newNodeValue)) {
+                        
+                        if (data.nodes.get(current_id*2) !== null) {
+                            console.log(data.nodes.get(2))
+                            console.log("проверка")
+                            if (side=="left"){
+                                data.nodes.update({id: current_id*2, label: String(newNodeValue),
+                                    color: {
+                                        background: 'rgba(140, 255, 220, 1)',  // Прозрачный цвет фона
+                                        highlight:  'rgba(140, 255, 220, 1)',
+                                        //hover: 'rgba(0,0,0,0)'
+                                        },
+                                        font: {
+                                            color: 'rgba(0, 0, 0, 1)'  // Прозрачный цвет текста
+                                        },
+                                        borderWidth: 1 })
+                                data.edges.update({from: current_id, to: current_id*2,color: 'rgba(0, 0, 0, 0.5)',  // Прозрачный цвет ребра
+                                //highlight: 'rgba(0, 0, 0, 1)',
+                                font: {
+                                  align: "top"
+                                },
+                                arrows: {
+                                  to: { enabled: true, scaleFactor: 1, type: "arrow" }
+                                }})
+                                newNodeId=current_id*2;
+                            } else {
+                                data.nodes.update({id: current_id*2+1, label: String(newNodeValue),
+                                    color: {
+                                        background: 'rgba(140, 255, 220, 1)',  // Прозрачный цвет фона
+                                        highlight:  'rgba(140, 255, 220, 1)',
+                                        //hover: 'rgba(0,0,0,0)'
+                                        },
+                                        font: {
+                                            color: 'rgba(0, 0, 0, 1)'  // Прозрачный цвет текста
+                                        },
+                                        borderWidth: 1 })
+                                        data.edges.update({from: current_id,to: current_id*2+1, color: 'rgba(0, 0, 0, 0.5)',  // Прозрачный цвет ребра
+                                        //highlight: 'rgba(0, 0, 0, 1)',
+                                        font: {
+                                          align: "top"
+                                        },
+                                        arrows: {
+                                          to: { enabled: true, scaleFactor: 1, type: "arrow" }
+                                        }})
+                                newNodeId=current_id*2+1;
+
+                            }
+                        }
+                        else {
+                            console.log("(data.nodes.get(current_id*2) !== undefined)",(data.nodes.get(current_id*2) !== undefined))
+                            console.log("есть ли ")
+                            // Добавить новые вершины, одна из которах невидимая
+                            // Добавляются, когда не существует ни одного потомка из данного узла
+                            data.nodes.add({id: current_id*2, label: String(newNodeValue)});
+                            data.nodes.add({id: current_id*2+1, label: String(newNodeValue)});
+
+                            var newNodeId
+                            if (side=="left"){
+                                data.nodes.update({id: current_id*2+1, label:""});
+                                newNodeId=current_id*2
+                                data.edges.add({ from: current_id, to: newNodeId });
+                                data.edges.add({ from: current_id, to: newNodeId+1,
+                                    color: 'rgba(0, 0, 0, 0)',  // Прозрачный цвет ребра
+                                    highlight: 'rgba(0, 0, 0, 0)',  // Прозрачный цвет при выделении (если нужно)
+                                });
+                                data.nodes.update({id: current_id*2+1, color: {
+                                    background: 'rgba(0, 0, 0, 0)', // Прозрачный цвет фона\
+                                    highlight: 'rgba(0, 0, 0, 0)',
+                                    },
+                                    font: {
+                                        color: 'rgba(0, 0, 0, 0)'  // Прозрачный цвет текста
+                                    },
+                                    borderWidth: 0 , // Устанавливаем толщину обводки в 0, чтобы сделать ее прозрачной
+                                    
+                                },
+                                    )
+                            } else {
+                                data.nodes.update({id: current_id*2, label:""});
+                                newNodeId=current_id*2+1
+                                console.log(side)
+                                data.edges.add({ from: current_id, to: newNodeId-1,
+                                    color: 'rgba(0, 0, 0, 0)',  // Прозрачный цвет ребра
+                                    highlight: 'rgba(0, 0, 0, 0)',  // Прозрачный цвет при выделении (если нужно)
+                                    
+                                });
+                                data.edges.add({ from: current_id, to: newNodeId });
+                                //console.log(data.edges.get());
+                                //data.edges.get.sort(function (a, b) {
+                                //    return a.to - b.to;
+                                //});
+                                //console.log("fde")
+                                //console.log(data.edges.get());
+
+                                
+                                data.nodes.update({id: current_id*2, color: {
+                                    background: 'rgba(0, 0, 0, 0)', // Прозрачный цвет фона\
+                                    highlight: 'rgba(0, 0, 0, 0)',
+                                    },
+                                    font: {
+                                        color: 'rgba(0, 0, 0, 0)'  // Прозрачный цвет текста
+                                    },
+                                    borderWidth: 0 , // Устанавливаем толщину обводки в 0, чтобы сделать ее прозрачной
+                                    
+                                },
+                                    )
+                            }
+                        }
+        
+                        fetch("traversal/add_node", {
+                            "method": "POST",
+                            "headers": {"Content-Type": "application/json"},
+                            "body": JSON.stringify({
+                                parentValue: current_label,
+                                newNodeId: newNodeId,  // или другой способ задать новый ID
+                                side: side,
+                                newNodeValue: newNodeValue
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Новая вершина успешно добавлена на сервере");
+                        })
+                        .catch(error => {
+                            console.error("Произошла ошибка при отправке данных на сервер", error);
+                        });
+
+                        // Скрыть контейнер для добавления новой вершины
+                        updateAddNodeContainer.classList.toggle('hidden');
+                        network.unselectAll();
+                    }
+                    
+
+                // Очистить поля ввода
+                addNode.value = "";
+              console.log("get edges")
+            console.log(data.edges.get());
+            console.log(data.edges)
+            var array=data.edges.get().sort(function(a,b) {
+                return a.from - b.from;
+            })
+            console.log("after sorting сейчас массив")
+            //data.edges.update(edges);
+            console.log(array);
+            var allEdges = data.edges.get();
+
+            // Удаление всех рёбер
+            allEdges.forEach(function(edgeId) {
+                data.edges.remove(edgeId);
+            });
+            console.log("after removing",data.edges.get())
+            data.edges.update(array);
+            console.log("теперь уже ребра сами");
+            console.log(data.edges.get())
+            console.log(data.edges);
+            console.log(typeof data.edges)  
+            };
+            
+
+            }
+            
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Находим элемент слайдера по идентификатору
+            var speedSlider = document.getElementById('speedSlider');
+        
+            // Добавляем слушатель событий для отслеживания изменений значения слайдера
+            speedSlider.addEventListener('input', function () {
+                // Получаем текущее значение слайдера
+                var speedValue = parseInt(speedSlider.value);
+                selectedSpeed=speedValue
+        
+                // Выводим значение в консоль (вы можете использовать его в вашей логике обхода)
+                console.log('Selected speed:', speedValue);
+            });
+        });
+
+    </script>
+
+       
+
+
+{% endblock %}
